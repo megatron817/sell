@@ -8,6 +8,7 @@ export const constantRouterMap = [
   {
     path: '/',
     name: 'index',
+    redirect: '/goods',
     component: () => import('@/views/goods')
   },
   {
