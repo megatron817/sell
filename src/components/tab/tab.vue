@@ -1,8 +1,8 @@
 <template>
   <div class="tab">
-    <div class="tab-item">商品</div>
-    <div class="tab-item">评论</div>
-    <div class="tab-item">商家</div>
+    <router-link to="/goods">商品</router-link>
+    <router-link to="/ratings">评论</router-link>
+    <router-link to="/seller">商家</router-link>
   </div>
 </template>
 
@@ -23,7 +23,11 @@ export default {
   width: 100%
   height: 40px
   line-height: 40px
-  .tab-item
+  & > a
     flex: 1
     text-align: center
+    color: #000
+    &.router-link-active
+      color: red
+      font-weight: bold
 </style>
