@@ -5,6 +5,9 @@ import App from './App'
 // 引入路由
 import router from './router'
 
+// 引入
+import '@/common/stylus/index.styl'
+
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */

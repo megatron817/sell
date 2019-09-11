@@ -1,5 +1,5 @@
 <template>
-  <div class="tab">
+  <div class="tab border-1px">
     <router-link to="/goods">商品</router-link>
     <router-link to="/ratings">评论</router-link>
     <router-link to="/seller">商家</router-link>
@@ -18,11 +18,14 @@ export default {
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus" scoped>
+@import '../../common/stylus/mixin.styl'
+
 .tab
   display: flex
   width: 100%
   height: 40px
   line-height: 40px
+  border-1px(rgba(7, 17, 27, .1))
   & > a
     flex: 1
     text-align: center
