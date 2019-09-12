@@ -32,5 +32,4 @@ export default {
     color: #000
     &.router-link-active
       color: red
-      font-weight: bold
 </style>
