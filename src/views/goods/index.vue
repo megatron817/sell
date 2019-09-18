@@ -1,8 +1,14 @@
 <template>
   <div class="goods">
+    <!-- 菜单 -->
     <div class="menu-wrapper" ref="menuWrapper">
       <ul>
-        <li v-for="(item, index) in goods" :key="index" class="menu-item" :class="{ 'current': currentIndex === index }">
+        <li
+          v-for="(item, index) in goods"
+          :key="index"
+          :class="{ 'current': currentIndex === index }"
+          class="menu-item"
+          @click="_handleClickMenu(index)">
           <span class="text border-1px">
             <span v-show="item.type > 0">*</span>
             {{ item.name }}
@@ -10,8 +16,9 @@
         </li>
       </ul>
     </div>
+    <!-- 食物 -->
     <div class="foods-wrapper" ref="foodsWrapper">
-      <ul>
+      <ul class="kkk">
         <li v-for="(item, index) in goods" :key="index" class="food-list food-list-hook">
           <h1 class="title">{{ item.name }}</h1>
           <ul>
@@ -1131,7 +1138,7 @@ export default {
       for (let index = 0; index < this.listHeight.length; index++) {
         let height1 = this.listHeight[index]
         let height2 = this.listHeight[index + 1]
-        if (!height2 || (this.scrollY > height1 && this.scrollY < height2)) {
+        if (!height2 || (this.scrollY >= height1 && this.scrollY < height2)) {
           return index
         }
       }
@@ -1147,7 +1154,9 @@ export default {
   methods: {
     // 初始化滚动条
     _initScroll () {
-      this.menuScroll = new Bscroll(this.$refs.menuWrapper, {})
+      this.menuScroll = new Bscroll(this.$refs.menuWrapper, {
+        click: true
+      })
       this.foodsScroll = new Bscroll(this.$refs.foodsWrapper, {
         probeType: 3
       })
@@ -1165,7 +1174,15 @@ export default {
         height += item.clientHeight
         this.listHeight.push(height)
       }
-      console.log(this.listHeight)
+      // console.log(this.listHeight)
+    },
+    // 点击菜单
+    _handleClickMenu (index) {
+      let foodList = this.$refs.foodsWrapper.getElementsByClassName('food-list-hook') // foodList: 右侧食物列表的数组
+      let el = foodList[index] // 通过索引找到对应的dom元素
+      this.foodsScroll.scrollToElement(el, 400)
+      // var h = el.offsetTop
+      // el.offsetParent.scrollTop = h
     }
   }
 }
@@ -1193,6 +1210,12 @@ export default {
       padding: 0 12px
       &.current
         background: #fff
+        position: relative
+        z-index: 10
+        margin-top: -1px
+        font-weight: 700
+        .text
+          border-none()
       .text
         display: table-cell
         width: 56px
