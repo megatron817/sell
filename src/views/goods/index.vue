@@ -18,7 +18,7 @@
     </div>
     <!-- 食物 -->
     <div class="foods-wrapper" ref="foodsWrapper">
-      <ul class="kkk">
+      <ul class="food-list-wrapper">
         <li v-for="(item, index) in goods" :key="index" class="food-list food-list-hook">
           <h1 class="title">{{ item.name }}</h1>
           <ul>
@@ -1180,9 +1180,7 @@ export default {
     _handleClickMenu (index) {
       let foodList = this.$refs.foodsWrapper.getElementsByClassName('food-list-hook') // foodList: 右侧食物列表的数组
       let el = foodList[index] // 通过索引找到对应的dom元素
-      this.foodsScroll.scrollToElement(el, 400)
-      // var h = el.offsetTop
-      // el.offsetParent.scrollTop = h
+      this.foodsScroll.scrollToElement(el, 300)
     }
   }
 }
