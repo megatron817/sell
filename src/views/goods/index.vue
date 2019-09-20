@@ -43,14 +43,23 @@
         </li>
       </ul>
     </div>
+    <!-- 购物车 -->
+    <Shopcart :delivery-price="seller.deliveryPrice" :min-price="seller.minPrice" />
   </div>
 </template>
 
 <script>
 import Bscroll from 'better-scroll'
+import Shopcart from '@/components/shopcart/shopcart'
 
 export default {
   name: 'Goods',
+  components: { Shopcart },
+  props: {
+    seller: {
+      type: Object
+    }
+  },
   data () {
     return {
       listHeight: [],
