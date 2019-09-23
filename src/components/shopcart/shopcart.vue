@@ -24,7 +24,7 @@ export default {
   props: {
     selectFoods: {
       type: Array,
-      default: () => [{ price: 5, count: 4 }]
+      default: () => [{ price: 0, count: 0 }]
     },
     deliveryPrice: {
       type: Number,
