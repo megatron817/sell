@@ -47,7 +47,7 @@
       </ul>
     </div>
     <!-- 购物车 -->
-    <Shopcart :delivery-price="seller.deliveryPrice" :min-price="seller.minPrice" />
+    <Shopcart :select-foods="selectFoods" :delivery-price="seller.deliveryPrice" :min-price="seller.minPrice" />
   </div>
 </template>
 
@@ -1156,6 +1156,16 @@ export default {
         }
       }
       return 0
+    },
+    // 计算被选中的商品
+    selectFoods () {
+      let data = []
+      this.goods.forEach(v => {
+        v.foods.forEach(k => {
+          if (k.count) data.push(k)
+        })
+      })
+      return data
     }
   },
   created () {
