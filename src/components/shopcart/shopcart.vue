@@ -15,6 +15,17 @@
         <div class="pay" :class="payClass">{{ payDesc }}</div>
       </div>
     </div>
+    <!-- 购物车小球 -->
+    <div class="ball-container">
+      <div
+        transition="drop"
+        v-for="(v, i) in balls"
+        :key="i"
+        v-show="v.show"
+        class="ball">
+        <div class="inner"></div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -74,7 +85,28 @@ export default {
   },
   data () {
     return {
-      msg: '购物车'
+      msg: '购物车',
+      balls: [
+        { show: false },
+        { show: false },
+        { show: false },
+        { show: false },
+        { show: false }
+      ],
+      dropBalls: []
+    }
+  },
+  methods: {
+    // goods父组件传递的el的值
+    drop (el) {
+      this.balls.forEach(v => {
+        if (!v.show) {
+          v.show = true
+          v.el = el
+          this.dropBalls.push(v)
+        }
+      })
+      // console.log(this.dropBalls)
     }
   }
 }
@@ -164,4 +196,18 @@ export default {
         &.enough
           color: #fff
           background: #00b43c
+
+  .ball-container
+    .ball
+      position: fixed
+      left: 32px
+      bottom: 22px
+      z-index: 200
+      &.drop-transition
+        transition: all .4s
+        .inner
+          width: 16px
+          height: 16px
+          border-radius: 50%
+          background: rgb(0, 160, 220)
 </style>

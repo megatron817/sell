@@ -38,7 +38,8 @@
                   <span class="old" v-show="food.oldPrice">￥{{ food.oldPrice }}</span>
                 </div>
                 <div class="cartcontrol-wrapper">
-                  <Cartcontrol :food="food" />
+                  <!-- 加减当前商品数量组件 -->
+                  <Cartcontrol :food="food" @cartAdd="_cartAdd" />
                 </div>
               </div>
             </li>
@@ -47,7 +48,11 @@
       </ul>
     </div>
     <!-- 购物车 -->
-    <Shopcart :select-foods="selectFoods" :delivery-price="seller.deliveryPrice" :min-price="seller.minPrice" />
+    <Shopcart
+      ref="shopcart"
+      :select-foods="selectFoods"
+      :delivery-price="seller.deliveryPrice"
+      :min-price="seller.minPrice" />
   </div>
 </template>
 
@@ -1205,12 +1210,11 @@ export default {
       let foodList = this.$refs.foodsWrapper.getElementsByClassName('food-list-hook') // foodList: 右侧食物列表的数组
       let el = foodList[index] // 通过索引找到对应的dom元素
       this.foodsScroll.scrollToElement(el, 300)
+    },
+    // 获取Cartcontrol组件的传值
+    _cartAdd (data) {
+      this.$refs.shopcart.drop(data) // 将值传递给Shopcart组件
     }
-    // 获取cartcontrol组件的传值
-    // addCount (count, index1, index2) {
-    //   // this.goods[index1].foods[index2].count = count
-    //   // console.log(this.goods[index1].foods[index2])
-    // }
   }
 }
 </script>

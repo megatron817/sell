@@ -6,7 +6,7 @@
       </div>
     </transition>
     <div class="cart-count" v-show="food.count">{{ food.count }}</div>
-    <div class="cart-add iconfont icon-add_circle" @click="addCart"></div>
+    <div class="cart-add iconfont icon-add_circle" @click="addCart($event)"></div>
   </div>
 </template>
 
@@ -28,12 +28,13 @@ export default {
   },
   methods: {
     // 增加商品
-    addCart () {
+    addCart (event) {
       if (!this.food.count) {
         this.$set(this.food, 'count', 1)
       } else {
         this.food.count++
       }
+      this.$emit('cartAdd', event.target)
     },
     // 减少商品
     reduceCart () {
