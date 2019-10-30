@@ -1213,7 +1213,10 @@ export default {
     },
     // 获取Cartcontrol组件的传值
     _cartAdd (data) {
-      this.$refs.shopcart.drop(data) // 将值传递给Shopcart组件
+      // 体验优化，异步执行小球下落动画
+      this.$nextTick(() => {
+        this.$refs.shopcart.drop(data) // 将值传递给Shopcart组件
+      })
     }
   }
 }

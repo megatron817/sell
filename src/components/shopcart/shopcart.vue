@@ -16,15 +16,17 @@
       </div>
     </div>
     <!-- 购物车小球 -->
-    <div class="ball-container">
-      <div
-        transition="drop"
-        v-for="(v, i) in balls"
-        :key="i"
-        v-show="v.show"
-        class="ball">
-        <div class="inner"></div>
-      </div>
+    <div class="ball-container" v-for="(v, i) in balls" :key="i">
+      <transition
+        name="drop"
+        @before-enter="beforeEnter"
+        @enter="enter"
+        @after-enter="afterEnter">
+        <div class="ball" v-show="v.show">
+          <!-- inner是一个小球 -->
+          <div class="inner inner-hook"></div>
+        </div>
+      </transition>
     </div>
   </div>
 </template>
@@ -104,9 +106,50 @@ export default {
           v.show = true
           v.el = el
           this.dropBalls.push(v)
+          return false
         }
       })
-      // console.log(this.dropBalls)
+    },
+    beforeEnter (el) {
+      let count = this.balls.length
+      while (count--) {
+        let ball = this.balls[count]
+        if (ball.show) {
+          // 返回元素的大小及其相对于视口的位置的对象
+          let rect = ball.el.getBoundingClientRect()
+          // 水平和竖直方向的偏移量
+          let x = rect.left - 32
+          let y = -(window.innerHeight - rect.top - 22) // window.innerHeight => 视图窗口高度
+          // 外层做一个纵向的变化
+          el.style.display = ''
+          el.style.webkitTransform = `translate3d(0, ${y}px, 0)`
+          el.style.transform = `translate3d(0, ${y}px, 0)`
+          // 内层做一个横向的变化
+          let inner = el.getElementsByClassName('inner-hook')[0]
+          inner.style.webkitTransform = `translate3d(${x}px, 0, 0)`
+          inner.style.transform = `translate3d(${x}px, 0, 0)`
+        }
+      }
+    },
+    enter (el) {
+      /* eslint-disable no-unused-vars */
+      let rf = el.offsetHeight /* 触发浏览器重绘 */
+      this.$nextTick(() => {
+        // 当下降的时候，重写外部和内部的translate3d()
+        el.style.webkitTransform = 'translate3d(0, 0, 0)'
+        el.style.transform = 'translate3d(0, 0, 0)'
+        let inner = el.getElementsByClassName('inner-hook')[0]
+        inner.style.webkitTransform = 'translate3d(0, 0, 0)'
+        inner.style.transform = 'translate3d(0, 0, 0)'
+      })
+    },
+    afterEnter (el) {
+      // 当降落完一个ball，就将该ball从balls数组中取出来
+      let ball = this.dropBalls.shift()
+      if (ball) {
+        ball.show = false
+        el.style.display = 'none'
+      }
     }
   }
 }
@@ -203,11 +246,11 @@ export default {
       left: 32px
       bottom: 22px
       z-index: 200
-      &.drop-transition
-        transition: all .4s
-        .inner
-          width: 16px
-          height: 16px
-          border-radius: 50%
-          background: rgb(0, 160, 220)
+      transition: all 0.4s cubic-bezier(0.49, -0.29, 0.75, 0.41)
+      .inner
+        width: 16px
+        height: 16px
+        border-radius: 50%
+        background: rgb(0, 160, 220)
+        transition: all .4s linear
 </style>
