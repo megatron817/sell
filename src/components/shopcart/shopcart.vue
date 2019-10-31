@@ -144,7 +144,7 @@ export default {
       })
     },
     afterEnter (el) {
-      // 当降落完一个ball，就将该ball从balls数组中取出来
+      // 当降落完一个ball时，就将该ball从dropBalls数组中取出来
       let ball = this.dropBalls.shift()
       if (ball) {
         ball.show = false
