@@ -1,6 +1,6 @@
 <template>
   <div class="shopcart">
-    <div class="content">
+    <div class="content" @click="toggleList">
       <div class="content-left">
         <div class="logo-wrapper">
           <div class="logo" :class="{ 'highlight': totalCount > 0 }">
@@ -28,12 +28,37 @@
         </div>
       </transition>
     </div>
+    <!-- 购物车列表 -->
+    <transition name="fold">
+      <div class="shopcart-list" v-show="listShow">
+        <div class="list-header">
+          <h1 class="title">购物车</h1>
+          <span class="empty">清空</span>
+        </div>
+        <div class="list-content">
+          <ul>
+            <li class="food" v-for="(v, i) in selectFoods" :key="i">
+              <span class="name">{{ v.name }}</span>
+              <div class="price">
+                <span>￥{{ v.price * v.count }}</span>
+              </div>
+              <div class="cartcontrol-wrapper">
+                <Cartcontrol :food="v"></Cartcontrol>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </transition>
   </div>
 </template>
 
 <script>
+import Cartcontrol from '@/components/cartcontrol/cartcontrol'
+
 export default {
   name: 'Shopcart',
+  components: { Cartcontrol },
   props: {
     selectFoods: {
       type: Array,
@@ -83,6 +108,15 @@ export default {
       } else if (this.totalPrice >= this.minPrice) {
         return 'enough'
       }
+    },
+    // 购物车列表是否可见
+    listShow () {
+      if (!this.totalCount) {
+        // this.fold = true
+        return false
+      }
+      let show = !this.fold
+      return show
     }
   },
   data () {
@@ -95,7 +129,8 @@ export default {
         { show: false },
         { show: false }
       ],
-      dropBalls: []
+      dropBalls: [],
+      fold: true
     }
   },
   methods: {
@@ -110,6 +145,7 @@ export default {
         }
       })
     },
+    /* 小球下落动画------begin */
     beforeEnter (el) {
       let count = this.balls.length
       while (count--) {
@@ -150,6 +186,14 @@ export default {
         ball.show = false
         el.style.display = 'none'
       }
+    },
+    /* 小球下落动画------end */
+    toggleList () {
+      if (!this.totalCount) {
+        return false
+      }
+      this.fold = !this.fold
+      // this.$refs.shopCartList.style.top = '-100px'
     }
   }
 }
@@ -253,4 +297,20 @@ export default {
         border-radius: 50%
         background: rgb(0, 160, 220)
         transition: all .4s linear
+
+  .shopcart-list
+    position: absolute
+    left: 0
+    top: 0
+    z-index: -1
+    width: 100%
+    transition: all .4s linear
+    &.fold-enter-to
+      transform: translate3d(0, -100%, 0)
+    &.fold-leave-to
+      transform: translate3d(0, 0, 0)
+    // &.fold-enter-active
+    //   transform: translate3d(0, -100%, 0)
+    // &.fold-leave-active
+    //   transform: translate3d(0, 0, 0)
 </style>
