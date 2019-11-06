@@ -30,7 +30,7 @@
     </div>
     <!-- 购物车列表 -->
     <transition name="fold">
-      <div class="shopcart-list" v-show="listShow">
+      <div class="shopcart-list" v-show="listShow" ref="shopCartList">
         <div class="list-header">
           <h1 class="title">购物车</h1>
           <span class="empty">清空</span>
@@ -110,13 +110,18 @@ export default {
       }
     },
     // 购物车列表是否可见
-    listShow () {
-      if (!this.totalCount) {
-        // this.fold = true
-        return false
+    listShow: {
+      get () {
+        return this.fold
+      },
+      set () {
+        if (!this.totalCount) {
+          this.fold = true
+          return false
+        }
+        let show = !this.fold
+        return show
       }
-      let show = !this.fold
-      return show
     }
   },
   data () {
@@ -193,7 +198,7 @@ export default {
         return false
       }
       this.fold = !this.fold
-      // this.$refs.shopCartList.style.top = '-100px'
+      this.$refs.shopCartList.style.top = '-100px'
     }
   }
 }
@@ -305,10 +310,10 @@ export default {
     z-index: -1
     width: 100%
     transition: all .4s linear
-    &.fold-enter-to
-      transform: translate3d(0, -100%, 0)
-    &.fold-leave-to
-      transform: translate3d(0, 0, 0)
+    // &.fold-enter-to
+    //   transform: translate3d(0, -100%, 0)
+    // &.fold-leave-to
+    //   transform: translate3d(0, 0, 0)
     // &.fold-enter-active
     //   transform: translate3d(0, -100%, 0)
     // &.fold-leave-active
