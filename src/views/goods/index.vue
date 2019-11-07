@@ -1245,7 +1245,7 @@ export default {
       &.current
         background: #fff
         position: relative
-        z-index: 10
+        z-index: 0
         margin-top: -1px
         font-weight: 700
         .text
