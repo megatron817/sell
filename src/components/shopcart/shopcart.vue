@@ -115,29 +115,30 @@ export default {
       }
     },
     // 购物车列表是否可见
-    listShow: {
-      get () {
-        return !this.fold
-      },
-      set () {
-        if (!this.totalCount) {
-          this.fold = true
-          return false
-        }
-        let show = !this.fold
-        if (show) {
+    listShow () {
+      return !this.fold
+    }
+  },
+  watch: {
+    // 购物车内商品总数量为零时，则折叠列表
+    totalCount: function (newVal, oldVal) {
+      if (newVal === 0) this.fold = true
+    },
+    // 监控fold
+    fold: function (newVal, oldVal) {
+      let show = !this.fold
+      if (show) {
+        this.$nextTick(() => {
           if (!this.scroll) {
-            this.$nextTick(() => {
-              this.scroll = new Bscroll(this.$refs.listContent, {
-                click: true
-              })
+            this.scroll = new Bscroll(this.$refs.listContent, {
+              click: true
             })
           } else {
             this.scroll.refresh()
           }
-        }
-        return show
+        })
       }
+      // return show
     }
   },
   data () {
