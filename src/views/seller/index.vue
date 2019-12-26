@@ -10,7 +10,7 @@
       <van-datetime-picker
         v-model="currentDate"
         type="datetime"
-        title="选择开始时间"
+        title="选择时间"
         :loading="isLoadingShow"
         :min-date="minDate"
         :max-date="maxDate"
