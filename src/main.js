@@ -7,9 +7,14 @@ import router from './router'
 // 引入vant
 import Vant from 'vant'
 import 'vant/lib/index.css'
+// 引入axios
+import axios from 'axios'
 
 // 引入样式文件
 import '@/common/stylus/index.styl'
+
+// 配置axios到原型链中
+Vue.prototype.$axios = axios
 
 Vue.config.productionTip = false
 Vue.use(Vant)
