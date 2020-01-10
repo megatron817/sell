@@ -13,6 +13,9 @@ import axios from 'axios'
 // 引入样式文件
 import '@/common/stylus/index.styl'
 
+// 引入mock文件，正式发布时，注释掉该处即可
+import '@/mock'
+
 // 配置axios到原型链中
 Vue.prototype.$axios = axios
 
