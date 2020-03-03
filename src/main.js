@@ -9,6 +9,9 @@ import Vant from 'vant'
 import 'vant/lib/index.css'
 // 引入axios
 import axios from 'axios'
+// 引入Vuex
+import Vuex from 'vuex'
+import store from '@/store/store'
 
 // 引入样式文件
 import '@/common/stylus/index.styl'
@@ -22,10 +25,14 @@ Vue.prototype.$axios = axios
 Vue.config.productionTip = false
 Vue.use(Vant)
 
+// 使用Vuex
+Vue.use(Vuex)
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
   router,
+  store, // 使用store
   render: h => h(App)
   // components: { App },
   // template: '<App/>'

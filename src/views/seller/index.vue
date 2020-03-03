@@ -37,6 +37,10 @@ export default {
       className: ''
     }
   },
+  created () {
+    this.$store.commit('showName', '幸运熊🐻')
+    console.log(this.$store)
+  },
   methods: {
     // 显示弹窗
     showPopup () {
