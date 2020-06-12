@@ -1,0 +1,13 @@
+border-1px($color)
+  position: relative
+  &:after
+    position: absolute
+    bottom: 0
+    left: 0
+    width: 100%
+    content: ''
+    border-top: 1px solid $color
+
+border-none()
+  &:after
+    display: none

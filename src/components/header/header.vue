@@ -9,7 +9,7 @@ export default {
   name: 'Header',
   data () {
     return {
-      msg: '我是头部'
+      msg: '头部'
     }
   }
 }
@@ -17,5 +17,10 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="stylus" rel="stylesheet/stylus" scoped>
-
+.header
+  background: skyblue
+  color: #fff
+  height: 40px
+  line-height: 40px
+  text-align: center
 </style>
